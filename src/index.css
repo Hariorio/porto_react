@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 14px !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600 !important;
+}
+
+/* Adjust MUI components */
+.MuiTypography-h4 {
+  font-size: 1.5rem !important;
+}
+
+.MuiTypography-h5 {
+  font-size: 1.25rem !important;
+}
+
+.MuiTypography-h6 {
+  font-size: 1.1rem !important;
+}
+
+.MuiTypography-body1 {
+  font-size: 0.875rem !important;
+}
+
+.MuiTypography-body2 {
+  font-size: 0.8rem !important;
+}
