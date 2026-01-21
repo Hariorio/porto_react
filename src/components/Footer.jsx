@@ -1,20 +1,10 @@
-import { Box, Typography } from '@mui/material';
-
 export default function Footer() {
   return (
-    <Box 
-      component="footer" 
-      sx={{ 
-        py: 2, 
-        px: 3, 
-        backgroundColor: 'white',
-        borderTop: '1px solid rgba(0, 0, 0, 0.08)',
-        textAlign: 'center'
-      }}
-    >
-      <Typography variant="body2" color="text.secondary">
-        © 2025 My Portfolio. Built with ❤️ using React & MUI
-      </Typography>
-    </Box>
-  )
+    <footer className="border-t border-slate-200 bg-white">
+      <div className="px-6 py-4 text-sm text-slate-500 flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
+        <p>© {new Date().getFullYear()} My Portfolio</p>
+        <p className="text-slate-400">Built with React + Vite + Tailwind</p>
+      </div>
+    </footer>
+  );
 }

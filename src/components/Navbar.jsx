@@ -1,34 +1,47 @@
-import { AppBar, Toolbar, Typography, IconButton, Box, Avatar } from '@mui/material';
-import { Search, Notifications } from '@mui/icons-material';
-
-export default function Navbar() {
+export default function Navbar({ onMenuClick }) {
   return (
-    <AppBar 
-      position="static" 
-      elevation={0}
-      sx={{ 
-        bgcolor: 'white',
-        color: 'text.primary',
-        borderBottom: '1px solid rgba(0, 0, 0, 0.08)'
-      }}
-    >
-      <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 600 }}>
-          Dashboard
-        </Typography>
-        
-        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-          <IconButton>
-            <Search />
-          </IconButton>
-          <IconButton>
-            <Notifications />
-          </IconButton>
-          <Avatar sx={{ width: 32, height: 32, ml: 1, bgcolor: 'primary.main' }}>
-            U
-          </Avatar>
-        </Box>
-      </Toolbar>
-    </AppBar>
-  )
+    <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/80 backdrop-blur">
+      <div className="flex items-center justify-between px-6 py-4">
+        {/* Left */}
+        <div className="flex items-center gap-3">
+          {/* Tombol menu selalu tampil */}
+          <button
+            type="button"
+            onClick={onMenuClick}
+            className="h-9 w-9 rounded-lg border border-slate-200 grid place-items-center hover:bg-slate-50 active:scale-95 transition"
+            aria-label="Toggle sidebar"
+          >
+            <div className="space-y-1">
+              <span className="block h-0.5 w-5 bg-slate-800"></span>
+              <span className="block h-0.5 w-5 bg-slate-800"></span>
+              <span className="block h-0.5 w-5 bg-slate-800"></span>
+            </div>
+          </button>
+
+          <div>
+            <p className="text-sm text-slate-500">Welcome</p>
+            <h1 className="text-lg font-semibold tracking-tight">
+              Dashboard Portfolio
+            </h1>
+          </div>
+        </div>
+
+        {/* Right */}
+        <div className="flex items-center gap-2">
+          <button className="rounded-lg border border-slate-200 px-3 py-2 text-sm hover:bg-slate-50">
+            Hire Me
+          </button>
+
+          <a
+            href="https://github.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-lg bg-slate-900 px-3 py-2 text-sm text-white hover:bg-slate-800"
+          >
+            GitHub
+          </a>
+        </div>
+      </div>
+    </header>
+  );
 }
