@@ -2,8 +2,8 @@ import { NavLink } from "react-router-dom";
 
 const nav = [
   {
-    to: "/HomePage",
-    label: "Home",
+    to: "/Dashboard",
+    label: "Dashboard",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
         <path
@@ -16,42 +16,74 @@ const nav = [
     ),
   },
   {
-    to: "/experience",
-    label: "Experience",
+    to: "/Employe",
+    label: "Employee",
     icon: (
-      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
-        <path
-          d="M9 6V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-        />
-        <path
-          d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8Z"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinejoin="round"
-        />
-      </svg>
+       <span className="mdi mdi-account-box text-xl text-white"></span>
+      // <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
+      //   <path
+      //     d="M9 6V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"
+      //     stroke="currentColor"
+      //     strokeWidth="1.8"
+      //     strokeLinecap="round"
+      //   />
+      //   <path
+      //     d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8Z"
+      //     stroke="currentColor"
+      //     strokeWidth="1.8"
+      //     strokeLinejoin="round"
+      //   />
+      // </svg>
     ),
   },
   {
-    to: "/contact",
-    label: "Contact",
+    to: "/Attendance",
+    label: "Attendance",
     icon: (
-      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
-        <path
-          d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7Z"
-          stroke="currentColor"
-          strokeWidth="1.8"
-        />
-        <path
-          d="m5 8 7 5 7-5"
-          stroke="currentColor"
-          strokeWidth="1.8"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <span className="mdi mdi-calendar-clock text-xl text-white"></span>
+      // <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
+      //   <path
+      //     d="M4 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7Z"
+      //     stroke="currentColor"
+      //     strokeWidth="1.8"
+      //   />
+      //   <path
+      //     d="m5 8 7 5 7-5"
+      //     stroke="currentColor"
+      //     strokeWidth="1.8"
+      //     strokeLinejoin="round"
+      //   />
+      // </svg>
+    ),
+    
+  },
+  {
+    to: "/Reporting",
+    label: "Reporting",
+    icon: (
+     <span className="mdi mdi-book-open text-xl text-white"></span>
+
+    ),
+  },
+  {
+    to: "/Leavemanagement",
+    label: "Leave Management",
+    icon: (
+       <span className="mdi mdi-recycle text-xl text-white"></span>
+      // <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
+      //   <path
+      //     d="M9 6V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"
+      //     stroke="currentColor"
+      //     strokeWidth="1.8"
+      //     strokeLinecap="round"
+      //   />
+      //   <path
+      //     d="M4 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8Z"
+      //     stroke="currentColor"
+      //     strokeWidth="1.8"
+      //     strokeLinejoin="round"
+      //   />
+      // </svg>
     ),
   },
 ];
@@ -65,9 +97,15 @@ function SidebarContent({ collapsed, onNavigate }) {
           collapsed ? "justify-center" : ""
         }`}
       >
-        <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-500 shrink-0" />
+        {/* <div className="h-11 w-11 rounded-xl  bg-gradient-to-br from-sky-500 to-indigo-500 shrink-0" 
+        
+        /> */}
+        <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-sky-500 to-indigo-500 shrink-0
+                        flex items-center justify-center">
+          <span className="mdi mdi-cannabis text-xl text-white"></span>
+        </div>
 
-        {/* Text header (animate hide/show) */}
+       
         <div
           className={[
             "leading-tight transition-all duration-300 ease-in-out",
@@ -76,9 +114,9 @@ function SidebarContent({ collapsed, onNavigate }) {
               : "opacity-100 translate-x-0 w-auto",
           ].join(" ")}
         >
-          <p className="font-semibold whitespace-nowrap">My Portfolio</p>
+          <p className="font-semibold whitespace-nowrap">HRIS</p>
           <p className="text-xs text-slate-400 whitespace-nowrap">
-            React + Vite + Tailwind
+            Management Apps
           </p>
         </div>
       </div>

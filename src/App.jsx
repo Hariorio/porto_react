@@ -64,22 +64,29 @@
 // }
 import { Routes, Route } from "react-router-dom";
 
-import Login from "./pages/Login.jsx";
-import HomePage from "./pages/HomePage.jsx";
-import ExperiencePage from "./pages/ExperiencePage.jsx";
-import ContactPage from "./pages/ContactPage.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import Employe from "./pages/Employe.jsx";
+import Attendance from "./pages/Attendance.jsx";
+import Reporting from "./pages/Reporting.jsx"
+import LeaveManagement from "./pages/LeaveManagement.jsx"
 
 import Master from "./Layouts/Master.jsx"
+
+import Login from "./pages/Formregister/Login.jsx";
+import Register from "./pages/Formregister/Register.jsx";
 
 export default function App() {
   return (
     <Routes>
    
       <Route path="/" element={<Login />} />
+      <Route path="/Register" element={<Register />} />
       <Route element={<Master />}>
-        <Route path="/homepage" element={<HomePage />} />
-        <Route path="/experience" element={<ExperiencePage />} />
-        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/Employe" element={<Employe />} />
+        <Route path="/Attendance" element={<Attendance />} />
+        <Route path="/Reporting" element={<Reporting />} />
+        <Route path="/Leavemanagement" element={<LeaveManagement />} />
       </Route>
     </Routes>
   );
