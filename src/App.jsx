@@ -64,11 +64,11 @@
 // }
 import { Routes, Route } from "react-router-dom";
 
-import Dashboard from "./pages/Dashboard.jsx";
-import Employe from "./pages/Employe.jsx";
-import Attendance from "./pages/Attendance.jsx";
-import Reporting from "./pages/Reporting.jsx"
-import LeaveManagement from "./pages/LeaveManagement.jsx"
+import DashboardPage from "./pages/Dashboard/DashboardPage.jsx";
+import Employe from "./pages/Employe/EmployePage.jsx";
+import Attendance from "./pages/Attendance/AttendancePage.jsx";
+import Reporting from "./pages/Reporting/ReportingPage.jsx"
+import LeaveManagement from "./pages/LeaveManagement/LeaveManagementPage.jsx"
 
 import Master from "./Layouts/Master.jsx"
 
@@ -82,11 +82,11 @@ export default function App() {
       <Route path="/" element={<Login />} />
       <Route path="/Register" element={<Register />} />
       <Route element={<Master />}>
-        <Route path="/Dashboard" element={<Dashboard />} />
-        <Route path="/Employe" element={<Employe />} />
-        <Route path="/Attendance" element={<Attendance />} />
-        <Route path="/Reporting" element={<Reporting />} />
-        <Route path="/Leavemanagement" element={<LeaveManagement />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/employe" element={<Employe />} />
+        <Route path="/attendance" element={<Attendance />} />
+        <Route path="/reporting" element={<Reporting />} />
+        <Route path="/leavemanagement" element={<LeaveManagement />} />
       </Route>
     </Routes>
   );

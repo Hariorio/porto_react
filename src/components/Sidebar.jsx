@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 const nav = [
   {
-    to: "/Dashboard",
+    to: "/dashboard",
     label: "Dashboard",
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
@@ -16,7 +16,7 @@ const nav = [
     ),
   },
   {
-    to: "/Employe",
+    to: "/employe",
     label: "Employee",
     icon: (
        <span className="mdi mdi-account-box text-xl text-white"></span>
@@ -37,7 +37,7 @@ const nav = [
     ),
   },
   {
-    to: "/Attendance",
+    to: "/attendance",
     label: "Attendance",
     icon: (
       <span className="mdi mdi-calendar-clock text-xl text-white"></span>
@@ -58,7 +58,7 @@ const nav = [
     
   },
   {
-    to: "/Reporting",
+    to: "/reporting",
     label: "Reporting",
     icon: (
      <span className="mdi mdi-book-open text-xl text-white"></span>
@@ -66,7 +66,7 @@ const nav = [
     ),
   },
   {
-    to: "/Leavemanagement",
+    to: "/leavemanagement",
     label: "Leave Management",
     icon: (
        <span className="mdi mdi-recycle text-xl text-white"></span>
