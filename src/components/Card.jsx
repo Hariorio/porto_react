@@ -1,8 +1,8 @@
 export default function Card({ children, className = "" }) {
   return (
     <div
-      className={`rounded-xl bg-white shadow border p-4 ${className}`}
-    >
+      className={`rounded-lg bg-white shadow border p-3 ${className}`}
+      >
       {children}
     </div>
   );
