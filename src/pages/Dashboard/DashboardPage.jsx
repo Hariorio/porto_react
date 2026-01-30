@@ -1,8 +1,21 @@
 import React, { useState } from 'react'
 import Card from '../../components/Card'
 import Button from '../../components/Button'
+
+
+const namex = [
+  { value: "1", label: "Ade" },
+  { value: "2", label: "Pace" },
+  { value: "3", label: "Dan" },
+  { value: "4", label: "Edo" },
+];
+
 const DashboardPage = () => {
+   
 const [isi, setIsi] = useState ({ name: "", alamat: "" });
+
+
+
 
 function handleKetik(i) {
     if (i.target.name === "name") {
@@ -30,14 +43,14 @@ function subMitBtn() {
 return (
    <div>
     <div className="flex flex-wrap gap-1 p-2 mx-auto">
-        <Card className="lg:w-73 !p-0 overflow-hidden hover:bg-gray-700">
+        <Card className="lg:w-73 !p-0 overflow-hidden">
             <div className="bg-red-500 px-4 py-3 ">
-            <h2 className="text-lg text-white font-semibold">Form</h2>
+                <h2 className="text-lg text-white font-semibold">Form Input</h2>
             </div>
             <label  htmlFor='name' className="mt-2 ml-2 p-2 block text-sm font-medium">
                 Nama
             </label>
-              <input
+                <input
                     id='name'
                     name='name'
                     value={isi.name}
@@ -57,13 +70,65 @@ return (
                     placeholder="ketik alamat"
                 />
                 <div className="ml-45">
-                <Button onClick={subMitBtn} className="p-2 m-2 bg-red-500">
-                  <div>
-                    Save
-                  </div>  
-                </Button>
+                    <Button onClick={subMitBtn} className="p-2 m-2 bg-red-500">
+                    <div>
+                        Save
+                    </div>  
+                    </Button>
                 </div>
         </Card>
+
+        <Card className="lg:w-73 !p-0 overflow-hidden">
+            <div className="bg-blue-500 px-4 py-3">
+
+            <h2 className="text-lg font-semibold text-white">Form Select</h2>
+            </div>
+
+            <label  htmlFor='name' className="mt-2 ml-2 p-2 block text-sm font-medium">
+                username
+            </label>
+            
+            <label  htmlFor='name' className="mt-2 ml-10 p-2 block text-sm font-medium">
+                HR
+            </label>
+            <input className='bg-white border'>
+
+            </input>
+
+
+            <select className='m-2 w-68 rounded-md border p-2'>
+                {namex.map((data)=>
+                (
+                    <option key={data.value} value={data.value}>
+                     {data.label}
+                    </option>
+                ))}
+
+            </select>
+
+            {/* <input
+                className="ml-2 m-2 w-68 rounded-md border p-2"
+                placeholder="ketik nama..."
+            /> */}
+
+
+            <label  htmlFor='alamat' className="mt-2 ml-2 p-2 block text-sm font-medium">
+                Alamat
+            </label>    
+                <input
+                     className="ml-2 m-2 w-68 rounded-md border p-2"
+                    placeholder="alamat"
+                />
+            <div className='ml-45'>
+                <Button className="p-2 m-2 bg-blue-500">
+                    <div>
+                        Save
+                    </div>  
+                </Button>
+            </div>    
+        </Card>
+
+
         <Card className="lg:w-73">
             <h2 className="text-lg font-semibold">Form</h2>
             <label className="mt-3 block text-sm font-medium">
@@ -78,21 +143,7 @@ return (
                     placeholder="alamat"
                 />
         </Card>
-        <Card className="lg:w-73">
-            <h2 className="text-lg font-semibold">Form</h2>
-            <label className="mt-3 block text-sm font-medium">
-                Nama
-            </label>
-              <input
-                    className="mt-2 w-full rounded-lg border p-2"
-                    placeholder="ketik nama..."
-                />
-                 <input
-                    className="mt-2 w-full rounded-lg border p-2"
-                    placeholder="alamat"
-                />
-        </Card>
-          <Card className="lg:w-73">
+          <Card className="lg:w-73 hover:bg-gray-700">
             <h2 className="text-lg font-semibold ">Form</h2>
             <label className="mt-3 block text-sm font-medium">
                 Nama
