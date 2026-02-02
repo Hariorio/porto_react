@@ -4,16 +4,29 @@ import Button from '../../components/Button'
 
 
 const namex = [
-  { value: "1", label: "Ade" },
-  { value: "2", label: "Pace" },
-  { value: "3", label: "Dan" },
-  { value: "4", label: "Edo" },
+  { value: "1", text: "Ade" },
+  { value: "2", text: "Pace" },
+  { value: "3", text: "Dan" },
+  { value: "4", text: "Edo" },
 ];
 
 const DashboardPage = () => {
    
 const [isi, setIsi] = useState ({ name: "", alamat: "" });
 
+const [nilaiAwal, setAmbildannilaiberubah] = useState ({text:""}); 
+
+function perubahansetelahdichange(e) {
+  setAmbildannilaiberubah({ text: e.target.value });  
+}
+
+function ikiBtn() {
+   const namaVariable = {
+    namatabelketikainsertdidb:nilaiAwal.text
+   };
+    
+   console.log(namaVariable);
+}
 
 
 
@@ -88,39 +101,25 @@ return (
                 username
             </label>
             
-            <label  htmlFor='name' className="mt-2 ml-10 p-2 block text-sm font-medium">
-                HR
-            </label>
-            <input className='bg-white border'>
-
-            </input>
-
-
-            <select className='m-2 w-68 rounded-md border p-2'>
+            <select onChange={perubahansetelahdichange} value={nilaiAwal.text} className='m-2 w-68 rounded-md border p-2'>
+                <option value="">-- Pilih Nama --</option>
                 {namex.map((data)=>
                 (
-                    <option key={data.value} value={data.value}>
-                     {data.label}
+                    <option key={data.value} value={data.text}>
+                     {data.text}
                     </option>
                 ))}
 
             </select>
-
-            {/* <input
-                className="ml-2 m-2 w-68 rounded-md border p-2"
-                placeholder="ketik nama..."
-            /> */}
-
-
             <label  htmlFor='alamat' className="mt-2 ml-2 p-2 block text-sm font-medium">
                 Alamat
             </label>    
                 <input
                      className="ml-2 m-2 w-68 rounded-md border p-2"
-                    placeholder="alamat"
+                     placeholder="alamat"
                 />
             <div className='ml-45'>
-                <Button className="p-2 m-2 bg-blue-500">
+                <Button onClick={ikiBtn} className="p-2 m-2 bg-blue-500">
                     <div>
                         Save
                     </div>  
