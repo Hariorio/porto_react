@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Card from '../../components/Card'
 import Button from '../../components/Button'
+import Alert from '../../components/Alert';
 
 
 const namex = [
@@ -10,19 +11,54 @@ const namex = [
   { value: "4", text: "Edo" },
 ];
 
+const jeniskelamin = [
+{value:"1" , text:"laki-laki"},
+{value:"2" , text:"perempuan"},
+{value:"3" , text:"lainya"}
+];
+
+
+
+
 const DashboardPage = () => {
    
 const [isi, setIsi] = useState ({ name: "", alamat: "" });
+const [jenis, setJenis] = useState({value:""});
+const [alamatIsi, setAlamatisiberubah] = useState ({alamat:""});
+const [nilaiAwal, setAmbildannilaiberubah] = useState ({text:""});
 
-const [nilaiAwal, setAmbildannilaiberubah] = useState ({text:""}); 
+const [showAlert, setShowAlert] = useState (false);
+
 
 function perubahansetelahdichange(e) {
   setAmbildannilaiberubah({ text: e.target.value });  
 }
 
+function handleIsi(x) {
+    //console.log(x.target.value);
+    setAlamatisiberubah({alamat: x.target.value});  
+}
+
+function handlejk(j) {
+// console.log(j.target.value)   
+setJenis({value: j.target.value})    
+}
+
 function ikiBtn() {
-   const namaVariable = {
-    namatabelketikainsertdidb:nilaiAwal.text
+
+// console.log(jenis.value);
+
+if (jenis.value === "") {
+    setShowAlert(true);
+ }else{
+ setShowAlert(false);
+ 
+ }
+
+const namaVariable = {
+    namatabelketikainsertdidb:nilaiAwal.text,
+    alamat:alamatIsi.alamat,
+    jk:jenis.value
    };
     
    console.log(namaVariable);
@@ -52,9 +88,18 @@ function subMitBtn() {
    };
    console.log(payload);
 }
-
+console.log("showAlert:", showAlert); 
 return (
    <div>
+    
+   {showAlert && (
+            <Alert className="bg-red-500 rounded-md mb-4">
+                Please fill in the required field!
+            </Alert>
+        )}
+
+    {/* <Alert>  { showAlert ? <Alert/> : null } loha</Alert> */}
+   
     <div className="flex flex-wrap gap-1 p-2 mx-auto">
         <Card className="lg:w-73 !p-0 overflow-hidden">
             <div className="bg-red-500 px-4 py-3 ">
@@ -97,11 +142,11 @@ return (
             <h2 className="text-lg font-semibold text-white">Form Select</h2>
             </div>
 
-            <label  htmlFor='name' className="mt-2 ml-2 p-2 block text-sm font-medium">
+            <label  htmlFor='username' className="mt-2 ml-2 p-2 block text-sm font-medium">
                 username
             </label>
             
-            <select onChange={perubahansetelahdichange} value={nilaiAwal.text} className='m-2 w-68 rounded-md border p-2'>
+            <select id='username' onChange={perubahansetelahdichange} value={nilaiAwal.text} className='m-2 w-68 rounded-md border p-2'>
                 <option value="">-- Pilih Nama --</option>
                 {namex.map((data)=>
                 (
@@ -111,13 +156,31 @@ return (
                 ))}
 
             </select>
-            <label  htmlFor='alamat' className="mt-2 ml-2 p-2 block text-sm font-medium">
+            <label  htmlFor='address' className="mt-2 ml-2 p-2 block text-sm font-medium">
                 Alamat
             </label>    
                 <input
+                     id='address'
+                     name='alamat'
+                     onChange={handleIsi}
+                     value={alamatIsi.alamat}
                      className="ml-2 m-2 w-68 rounded-md border p-2"
                      placeholder="alamat"
                 />
+
+             <label htmlFor="jenisKelamin" className='mt-2 ml-2 p-2 block text-sm font-medium'>
+                Jenis Kelamin
+             </label>
+             <select id='jenisKelamin' onChange={handlejk} value={jenis.value} className='m-2 w-68 rounded-md border p-2'>
+                <option value="">-- Jenis Kelamin --</option> 
+                {jeniskelamin.map((hasil)=>
+                (
+                    <option key={hasil.value} value={hasil.value}>
+                       {hasil.text} 
+                    </option>
+
+                ))}   
+            </select> 
             <div className='ml-45'>
                 <Button onClick={ikiBtn} className="p-2 m-2 bg-blue-500">
                     <div>

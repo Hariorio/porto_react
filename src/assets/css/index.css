@@ -64,5 +64,21 @@ body {
     @apply w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50;
   }
 
+  .alert-enter {
+    opacity: 0;
+  }
+  .alert-enter-active {
+      opacity: 1;
+      transition: opacity 0.3s ease-in;
+  }
+  .alert-exit {
+      opacity: 1;
+  }
+  .alert-exit-active {
+      opacity: 0;
+      transition: opacity 0.3s ease-out;
+  }
+
+
   
 }
