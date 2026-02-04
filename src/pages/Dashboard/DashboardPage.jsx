@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import Card from '../../components/Card'
 import Button from '../../components/Button'
-import Alert from '../../components/Alert';
+import Alert, { AlertSukses } from '../../components/Alert'
+
+
 
 
 const namex = [
@@ -28,6 +30,9 @@ const [alamatIsi, setAlamatisiberubah] = useState ({alamat:""});
 const [nilaiAwal, setAmbildannilaiberubah] = useState ({text:""});
 
 const [showAlert, setShowAlert] = useState (false);
+const [alertPesan, setAlertPesan] = useState ("");
+const [sukses, setSukses] = useState("");
+
 
 
 function perubahansetelahdichange(e) {
@@ -46,23 +51,61 @@ setJenis({value: j.target.value})
 
 function ikiBtn() {
 
-// console.log(jenis.value);
+//buat cecking, mengeceks adalah objek yang berisi beberapa objek lain, yang masing-masing berisi properti value dan message
+// Array validations:
 
-if (jenis.value === "") {
-    setShowAlert(true);
- }else{
- setShowAlert(false);
- 
- }
+//  membuat array validations yang berisi objek dengan dua properti: value (isi input) dan message (pesan error). Setiap objek merepresentasikan satu form yang harus divalidasi.
 
+// Ini memungkinkan kamu untuk menambah atau mengurangi kondisi validasi tanpa menambah banyak if statement atau duplikasi kode.
+
+// Looping untuk Validasi:
+
+// Fungsi handleButtonClick sekarang melakukan iterasi melalui array validations. Setiap objek diperiksa untuk nilai kosong.
+
+// Jika ada nilai kosong, setAlertMessage diatur dengan pesan yang sesuai dan alert muncul. Fungsi kemudian berhenti dengan return setelah menemukan kondisi yang gagal.
+
+// Pesan Dinamis:
+
+// alertMessage diatur sesuai dengan kondisi yang gagal, dan alert akan muncul dengan pesan yang relevan, misalnya "Jenis kelamin harus diisi!" atau "Alamat harus diisi!".
+
+// Menambah Kondisi Validasi:
+
+// Untuk menambah form atau input baru yang harus divalidasi, cukup tambahkan objek baru ke dalam array validations
+
+
+const mengeceks = [
+{value:nilaiAwal.text, message: "Nama Field Harus Di Isi !"},
+{value:alamatIsi.alamat, message: "Alamat Field Harus Di Isi  !"},
+{value:jenis.value, message: "Jenis kelamin harus diisi !"}
+
+];
+
+for (let mengecek of mengeceks) {
+      if (mengecek.value === "") {
+        setAlertPesan(mengecek.message); 
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false); 
+        }, 2000);
+        return; 
+      }
+    }
+
+    // If no errors, hide alert
+setShowAlert(false);
 const namaVariable = {
     namatabelketikainsertdidb:nilaiAwal.text,
     alamat:alamatIsi.alamat,
     jk:jenis.value
    };
-    
-   console.log(namaVariable);
-}
+
+   setSukses(true);
+   setTimeout(() => {
+          setSukses(false); 
+        }, 2000);
+        return;  
+  console.log(namaVariable);     
+};
 
 
 
@@ -88,19 +131,11 @@ function subMitBtn() {
    };
    console.log(payload);
 }
-console.log("showAlert:", showAlert); 
+// console.log("showAlert:", showAlert); 
 return (
    <div>
-    
-   {showAlert && (
-            <Alert className="bg-red-500 rounded-md mb-4">
-                Please fill in the required field!
-            </Alert>
-        )}
-
-    {/* <Alert>  { showAlert ? <Alert/> : null } loha</Alert> */}
    
-    <div className="flex flex-wrap gap-1 p-2 mx-auto">
+       <div className="flex flex-wrap gap-1 p-2 mx-auto">
         <Card className="lg:w-73 !p-0 overflow-hidden">
             <div className="bg-red-500 px-4 py-3 ">
                 <h2 className="text-lg text-white font-semibold">Form Input</h2>
@@ -181,6 +216,17 @@ return (
 
                 ))}   
             </select> 
+             {showAlert && (
+                <Alert className="bg-red-500 rounded-br-3xl mb-4">
+                {alertPesan}
+                </Alert>
+            )}
+
+            {sukses && (
+                <AlertSukses className="bg-lime-500 rounded-br-3xl mb-4">
+                  Sukse Mengirim data Hanya Tinggal Get Api !
+                </AlertSukses>
+            )}
             <div className='ml-45'>
                 <Button onClick={ikiBtn} className="p-2 m-2 bg-blue-500">
                     <div>
