@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 
@@ -8,8 +8,14 @@ const [mbukak, setMbukak] = useState(false);
 function handleX() {
   // console.log(i);
    setMbukak((mbukak) => !mbukak);
-   console.log(mbukak);
+  //  console.log(mbukak);
 }
+
+useEffect(() => {
+  if (mbukak) {
+ setMbukak(false);
+  }
+}, []);
 
   return (
     <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/80 backdrop-blur">

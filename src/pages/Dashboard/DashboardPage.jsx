@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useEffectEvent } from 'react'
 import Card from '../../components/Card'
 import Button from '../../components/Button'
 import Alert, { AlertSukses } from '../../components/Alert'
+import Loading from '../../components/Loading'
 
 
 
@@ -33,6 +34,8 @@ const [showAlert, setShowAlert] = useState (false);
 const [alertPesan, setAlertPesan] = useState ("");
 const [sukses, setSukses] = useState("");
 
+const [loading, setLoading] = useState(false); 
+
 
 
 function perubahansetelahdichange(e) {
@@ -50,7 +53,6 @@ setJenis({value: j.target.value})
 }
 
 function ikiBtn() {
-
 //buat cecking, mengeceks adalah objek yang berisi beberapa objek lain, yang masing-masing berisi properti value dan message
 // Array validations:
 
@@ -81,7 +83,7 @@ const mengeceks = [
 ];
 
 for (let mengecek of mengeceks) {
-      if (mengecek.value === "") {
+    if (mengecek.value === "") {
         setAlertPesan(mengecek.message); 
         setShowAlert(true);
         setTimeout(() => {
@@ -91,7 +93,7 @@ for (let mengecek of mengeceks) {
       }
     }
 
-    // If no errors, hide alert
+setLoading(true);
 setShowAlert(false);
 const namaVariable = {
     namatabelketikainsertdidb:nilaiAwal.text,
@@ -101,6 +103,7 @@ const namaVariable = {
 
    setSukses(true);
    setTimeout(() => {
+    setLoading(false);
           setSukses(false); 
         }, 2000);
         return;  
@@ -131,11 +134,18 @@ function subMitBtn() {
    };
    console.log(payload);
 }
+useEffect(() => {
+    if (sukses) {
+      setAmbildannilaiberubah({ text: "" });
+      setAlamatisiberubah({ alamat: "" });
+      setJenis({ value: "" });
+    }
+  }, [sukses])
 // console.log("showAlert:", showAlert); 
 return (
    <div>
-   
-       <div className="flex flex-wrap gap-1 p-2 mx-auto">
+    <div className="flex flex-wrap gap-1 p-2 mx-auto">
+        {/* CARD SATU */}
         <Card className="lg:w-73 !p-0 overflow-hidden">
             <div className="bg-red-500 px-4 py-3 ">
                 <h2 className="text-lg text-white font-semibold">Form Input</h2>
@@ -171,6 +181,7 @@ return (
                 </div>
         </Card>
 
+        {/* CARD DUA */}
         <Card className="lg:w-73 !p-0 overflow-hidden">
             <div className="bg-blue-500 px-4 py-3">
 
@@ -216,6 +227,7 @@ return (
 
                 ))}   
             </select> 
+             {loading ? <Loading /> : null}
              {showAlert && (
                 <Alert className="bg-red-500 rounded-br-3xl mb-4">
                 {alertPesan}
@@ -229,7 +241,7 @@ return (
             )}
             <div className='ml-45'>
                 <Button onClick={ikiBtn} className="p-2 m-2 bg-blue-500">
-                    <div>
+                    <div >
                         Save
                     </div>  
                 </Button>
@@ -238,7 +250,7 @@ return (
 
 
         <Card className="lg:w-73">
-            <h2 className="text-lg font-semibold">Form</h2>
+            <h2 className="text-lg font-semibold">Form Get Data</h2>
             <label className="mt-3 block text-sm font-medium">
                 Nama
             </label>
@@ -246,11 +258,14 @@ return (
                     className="mt-2 w-full rounded-lg border p-2"
                     placeholder="ketik nama..."
                 />
+            <label>
+            </label>    
                  <input
                     className="mt-2 w-full rounded-lg border p-2"
                     placeholder="alamat"
                 />
         </Card>
+
           <Card className="lg:w-73 hover:bg-gray-700">
             <h2 className="text-lg font-semibold ">Form</h2>
             <label className="mt-3 block text-sm font-medium">
@@ -267,7 +282,7 @@ return (
         </Card>
     </div>
     
-        <div className="grid gap-1 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-1 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <div className="bg-lime-600 p-4 rounded-lg shadow-xl hover:bg-gray-700">
             <h1 className="text-lg mb-px text-center text-white font-semibold">Judul Card</h1>
             <p className="mt-2 text-white text-center text-sm ">Isi card.</p>
@@ -316,7 +331,7 @@ return (
             <h1 className="text-lg mb-px text-center text-white font-semibold">Judul Card</h1>
             <p className="mt-2 text-white text-center text-sm ">Isi card.</p>
         </div>
-        </div>
+    </div>
    </div>
   )
 }
