@@ -12,6 +12,7 @@
   "dependencies": {
     "@mdi/font": "^7.4.47",
     "@tailwindcss/vite": "^4.1.18",
+    "axios": "^1.13.5",
     "bootstrap": "^5.3.8",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
