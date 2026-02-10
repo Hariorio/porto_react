@@ -75,7 +75,7 @@ try {
     
 const res = await api.get("/api/Get/Toko");
 setKota(res.data);
-console.log("hasil", res.data);
+// console.log("hasil", res.data);
 
 } catch (err) {
     setError(err?.response.data?.message || err.message || "gagal");
@@ -88,9 +88,69 @@ GetKota();
 },[]);
 
 
-function selectedNama (r) {
-    
+const [selectusername, setselectusername] = useState("");
+
+
+function handlebuttonusername(e) {
+  setselectusername(e.target.value);
 }
+
+
+
+const [valuename,setValuename] = useState("");
+
+function selectedNama (r) {
+    setValuename({nama: r.target.value});
+}
+
+const [SelectKota, setSelectKota] = useState("");
+
+function handlekota (k) {
+    setSelectKota({id: k.target.value});
+}
+
+
+async function saveApi() {
+  const payload = {
+    username:selectusername.username,
+    nama:valuename.nama,
+    cabang:SelectKota.id  
+  };
+    console.log(payload);
+  try {
+    // const res = await api.post("/api/cabang/v1/nama", payload);
+
+    // console.log("success:", res.data);
+    setSukses(true); 
+    setTimeout(() => {
+    // setLoading(false);
+          setSukses(false); 
+        }, 2000);
+        return;
+  
+
+  } catch (err) {
+    console.log("error:", err.response?.data);
+
+  
+    if (err.response?.status === 422) {
+      console.log(err.response.data.errors);
+    }
+  }
+}
+
+useEffect(() => {
+    if (sukses) {
+      setselectusername({ username: "" });
+    //   console.log("apa", username);
+      setValuename({ nama: "" });
+      setSelectKota({ id: "" });
+    }
+  }, [sukses])
+
+
+
+
 
 
 function perubahansetelahdichange(e) {
@@ -247,7 +307,7 @@ return (
             <h2 className="text-lg font-semibold text-white">Form Select</h2>
             </div>
 
-            <label  htmlFor='username' className="mt-2 ml-2 p-2 block text-sm font-medium">
+            <label  htmlFor='usernamex' className="mt-2 ml-2 p-2 block text-sm font-medium">
                 username
             </label>
             
@@ -310,41 +370,35 @@ return (
         {/* Get Data API */}
          <Card className="lg:w-73 !p-0 overflow-hidden">
             <div className="bg-green-500 px-4 py-3 ">
-                <h2 className="text-lg text-white font-semibold">Get Data API</h2>
+                <h2 className="text-lg text-white font-semibold">Get Data And Post API</h2>
             </div>
            <label  htmlFor='username' className="mt-2 ml-2 p-2 block text-sm font-medium">
                 Username
             </label>
-              <select className='m-2 w-68 rounded-md border p-2'>
-                <option value=""> -- Pilih Username -- </option>
+              <select className='m-2 p-2 w-68 border rounded-md text-gray-400'   onChange={handlebuttonusername} value={selectusername}>
+                <option value=""> Pilih Username </option>
 
-                {datas.map((hasil)=>
+                {datas.map((i)=>
                 (
-                <option key={hasil.new_id} value={hasil.username}>
-                {hasil.username} 
+                <option key={i.new_id} value={i.username} className='bg-gray-800'>
+                {i.username} 
                 </option>
                 ))} 
               </select>
             <label  htmlFor='nama' className="mt-2 ml-2 p-2 block text-sm font-medium">
                 Nama
             </label>    
-           <select
-                className={`m-2 w-68 rounded-md hover border p-2 ${
-                    selectedNama === "" ? "text-red-900" : "text-gray-400"
-                }`}
-                >
-                <option value="" disabled>
-                    Pilih Nama
-                </option>
-                {datas.map((hasil) => (
-                    <option key={hasil.new_id} value={hasil.username} className='bg-gray-800'>
-                    {hasil.username}
+           <select className='m-2 p-2 w-68 border rounded-md text-gray-400' onChange={selectedNama} value={valuename.nama}>
+                <option value=""> Pilih Nama </option>
+                {datas.map((x) => (
+                    <option key={x.new_id} value={x.nama} className='bg-gray-800'>
+                    {x.nama}
                     </option>
                 ))}
           </select>
 
             <label htmlFor="kota" className='mt-2 ml-2 p-2 block text-sm font-medium'>Kota</label>
-            <select name="cabang" id="cabang" className='m-2 p-2 w-68 border rounded-md text-gray-400'> 
+            <select name="cabang" id="cabang" className='m-2 p-2 w-68 border rounded-md text-gray-400' onChange={handlekota} value={SelectKota.id}> 
                 <option value="" > Pilih cabang </option>
 
             {kota.map((x) => (
@@ -354,7 +408,7 @@ return (
                 ))}
             </select>
             <div className='ml-40'>
-                <Button className='m-2 p-2 bg-green-500'>
+                <Button onClick={saveApi} className='m-2 p-2 bg-green-500'>
                     Submit
                 </Button>
             </div>
