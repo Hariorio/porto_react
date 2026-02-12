@@ -4,6 +4,7 @@ import Button from '../../components/Button'
 import Alert, { AlertSukses } from '../../components/Alert'
 import Loading from '../../components/Loading'
 import { api } from '../../lib/Api'
+import { Pencil, Trash2 } from "lucide-react";
 
 
 
@@ -21,7 +22,26 @@ const jeniskelamin = [
 {value:"3" , text:"lainya"}
 ];
 
-
+const experiences = [
+  {
+    id: 1,
+    period: "Nov 2023 - Sekarang",
+    title: "STAFF IT LEAD (FullStack Developer)",
+    company: "PT. Kosmetika Klinik Indonesia (MS GLOW OFFICE)",
+  },
+  {
+    id: 2,
+    period: "Feb 2022 - Nov 2023",
+    title: "STAFF IT (FullStack Developer)",
+    company: "PT. Viva Kencana Investindo",
+  },
+  {
+    id: 3,
+    period: "Aug 2021 - Aug 2022",
+    title: "STAFF IT (FullStack Developer)",
+    company: "Wava Husada Hospital",
+  },
+];
 
 
 const DashboardPage = () => {
@@ -46,6 +66,32 @@ const [loading, setLoading] = useState(false);
 const [datas, setDatas] = useState ([]);
 const [kota, setKota] = useState([]);
 const [error, setError] = useState("");
+
+const [Result, SetResult] = useState([]);
+
+
+useEffect(() => {
+  
+async function GetResult() {
+    try {
+
+     const res = await api.get('/api/hasil/v1/berkembang');
+     SetResult(res.data); 
+     console.log(res.data);  
+
+    } catch (err) {
+         setError(err?.response.data?.message || err.message || "gagal");
+    }
+}
+
+GetResult();
+
+},[]);
+
+
+
+
+
 
 useEffect(() => {
   
@@ -92,7 +138,7 @@ const [selectusername, setselectusername] = useState("");
 
 
 function handlebuttonusername(e) {
-  setselectusername(e.target.value);
+  setselectusername({username: e.target.value});
 }
 
 
@@ -116,25 +162,44 @@ async function saveApi() {
     nama:valuename.nama,
     cabang:SelectKota.id  
   };
-    console.log(payload);
+  setShowAlert(false);
+    // console.log(payload);
   try {
-    // const res = await api.post("/api/cabang/v1/nama", payload);
-
-    // console.log("success:", res.data);
+    const res = await api.post("/api/cabang/v1/nama", payload);
     setSukses(true); 
     setTimeout(() => {
-    // setLoading(false);
+  
           setSukses(false); 
         }, 2000);
-        return;
+    return res.data;
   
 
-  } catch (err) {
-    console.log("error:", err.response?.data);
-
-  
+  } catch (err) { 
     if (err.response?.status === 422) {
-      console.log(err.response.data.errors);
+    //   console.log(err.response.data.errors);
+    const data = err.response.data;
+    console.log("bikin variable data dan di isi dengan err.response.data :", data)  
+    if (data && data.errors) {
+        const ambilerr = data.errors;
+        console.log("dan didalam data tersebut ada object errors,massage,status bikin lagi variable untuk mengambil nilainya lalu isi dengan data.errors ", ambilerr);
+    if (ambilerr.username) {
+        setAlertPesan(ambilerr.username);
+        setShowAlert(true);
+        return;
+    }
+    if (ambilerr.nama) {
+        setAlertPesan(ambilerr.nama);
+        setShowAlert(true);
+        return;       
+    }
+    if (ambilerr.cabang) {
+        setAlertPesan(ambilerr.cabang);
+        setShowAlert(true);
+        return;
+    }
+
+    }
+
     }
   }
 }
@@ -147,6 +212,22 @@ useEffect(() => {
       setSelectKota({ id: "" });
     }
   }, [sukses])
+
+useEffect(() => {
+  if (!showAlert) return;
+
+  const t = setTimeout(() => {
+    setShowAlert(false);
+    setAlertPesan("");
+  }, 3000);
+
+  return () => clearTimeout(t);
+}, [showAlert, alertPesan]);
+
+
+async function BtnUpdateApi(s) {
+    console.log(s)
+}
 
 
 
@@ -260,6 +341,15 @@ useEffect(() => {
     }
   }, [sukses])
 if (error) return <p>Error: {error}</p>;
+
+const handleEdit = (id) => {
+    console.log("edit", id);
+  };
+
+  const handleDelete = (id) => {
+    console.log("delete", id);
+  };
+
 // console.log("showAlert:", showAlert); 
 return (
    <div>
@@ -375,7 +465,7 @@ return (
            <label  htmlFor='username' className="mt-2 ml-2 p-2 block text-sm font-medium">
                 Username
             </label>
-              <select className='m-2 p-2 w-68 border rounded-md text-gray-400'   onChange={handlebuttonusername} value={selectusername}>
+              <select className='m-2 p-2 w-68 border rounded-md text-gray-400' onChange={handlebuttonusername} value={selectusername.username}>
                 <option value=""> Pilih Username </option>
 
                 {datas.map((i)=>
@@ -407,14 +497,25 @@ return (
                     </option>
                 ))}
             </select>
-            <div className='ml-40'>
+             {showAlert && (
+                <Alert className="bg-red-500 rounded-br-3xl mb-4">
+                {alertPesan}
+                </Alert>
+            )}
+
+
+            <div className=''>
                 <Button onClick={saveApi} className='m-2 p-2 bg-green-500'>
                     Submit
                 </Button>
+                <Button onClick={BtnUpdateApi} className=' ml-10 p-2 bg-yellow-500'>
+                    Update
+                </Button>
             </div>
+
         </Card>
 
-          <Card className="lg:w-73 hover:bg-gray-700">
+        <Card className="lg:w-73 hover:bg-gray-700">
             <h2 className="text-lg font-semibold ">Form</h2>
             <label className="mt-3 block text-sm font-medium">
                 Nama
@@ -430,6 +531,71 @@ return (
         </Card>
     </div>
     
+ 
+    <div className="mt-3 max-w-2xl space-y-3">
+    {experiences.map((item) => (
+        <div
+        key={item.id}
+        className="relative flex items-center justify-between rounded-md border border-transparent ring-1 ring-blue-400 bg-white px-4 py-3"
+        >
+        <span className="absolute left-0 top-1/2 h-10 w-1 -translate-y-1/2 rounded-r bg-blue-400" />
+
+        <div className="grid min-w-0 flex-1 grid-cols-[220px_1fr] items-center gap-5 pr-3">
+            <p className="text-xl font-semibold text-slate-800 leading-tight">{item.period}</p>
+
+            <div className="min-w-0">
+            <p className="truncate text-xl font-semibold text-slate-800 leading-tight">{item.title}</p>
+            <p className="truncate text-lg font-medium text-slate-600 leading-tight mt-1">{item.company}</p>
+            </div>
+        </div>
+
+        <div className="flex shrink-0 items-center gap-4">
+            <button onClick={() => handleEdit(item.id)} className="text-blue-700" type="button">
+            <Pencil size={18} />
+            </button>
+            <button onClick={() => handleDelete(item.id)} className="text-red-500" type="button">
+            <Trash2 size={18} />
+            </button>
+        </div>
+        </div>
+    ))}
+    </div>
+
+
+    {/* DATA TABLES */}
+    <div className="overflow-x-auto m-2 rounded-xl border p-2 border-gray-200 shadow-lg">
+    <table className="min-w-full divide-y divide-gray-200 text-sm">
+        <thead className="bg-gray-50">
+        <tr>
+            <th className="px-4 py-3 text-left font-semibold text-gray-700">Song</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-700">Artist</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-700">Year</th>
+        </tr>
+        </thead>
+
+        <tbody className="divide-y divide-gray-100 [&>tr:nth-child(odd)]:bg-white [&>tr:nth-child(even)]:bg-gray-50">
+        <tr className="hover:bg-gray-100 transition-colors">
+            <td className="px-4 py-3 text-gray-800">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
+            <td className="px-4 py-3 text-gray-700">Malcolm Lockyer</td>
+            <td className="px-4 py-3 text-gray-700">1961</td>
+        </tr>
+        <tr className="hover:bg-gray-100 transition-colors">
+            <td className="px-4 py-3 text-gray-800">Witchy Woman</td>
+            <td className="px-4 py-3 text-gray-700">The Eagles</td>
+            <td className="px-4 py-3 text-gray-700">1972</td>
+        </tr>
+        <tr className="hover:bg-gray-100 transition-colors">
+            <td className="px-4 py-3 text-gray-800">Shining Star</td>
+            <td className="px-4 py-3 text-gray-700">Earth, Wind, and Fire</td>
+            <td className="px-4 py-3 text-gray-700">1975</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+
+           
+
+
     <div className="grid gap-1 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         <div className="bg-lime-600 p-4 rounded-lg shadow-xl hover:bg-gray-700">
             <h1 className="text-lg mb-px text-center text-white font-semibold">Judul Card</h1>
